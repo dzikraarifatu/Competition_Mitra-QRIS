@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mitra Usaha QRIS | Prototipe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0b1f3a;--ink:#10243f;--lime:#2f6bff;--acc2:#14c9b4;--pow:#f3f7ff;--line:rgba(16,36,63,.10);--mute:#5d6f87;--warn:#e0455a;--g:linear-gradient(135deg,#2f6bff,#6a8dff 60%,#14c9b4);--h:'Manrope',system-ui,sans-serif;--b:'Poppins',system-ui,'Segoe UI',sans-serif;--sh:0 1px 2px rgba(16,36,63,.04),0 12px 32px -8px rgba(30,70,140,.16)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--b);color:var(--ink);line-height:1.55;display:flex;justify-content:center;font-variant-numeric:tabular-nums;background:radial-gradient(900px 500px at 0% -5%,rgba(47,107,255,.22),transparent 60%),radial-gradient(700px 500px at 100% 100%,rgba(20,201,180,.16),transparent 60%),#eef3fb;background-attachment:fixed;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid rgba(47,107,255,.55);outline-offset:2px}
+#app{width:100%;max-width:1120px;min-height:100dvh;background:rgba(255,255,255,.35);box-shadow:0 0 0 1px rgba(255,255,255,.6),0 0 70px rgba(30,70,140,.10)}
+.top{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:12px 22px;background:rgba(255,255,255,.72);backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid var(--line);color:var(--ink)}
+.brand{display:flex;align-items:center;gap:10px;font:800 1.05rem var(--h);letter-spacing:-.01em}.brand svg{width:34px;height:34px;filter:drop-shadow(0 4px 8px rgba(47,107,255,.35))}
+.pill{background:var(--g);color:#fff;padding:7px 14px;border-radius:99px;font-weight:700;font-size:.76rem;box-shadow:0 6px 16px -4px rgba(47,107,255,.5)}
+main{padding:26px 28px 120px}
+.view{animation:up .45s cubic-bezier(.2,.7,.2,1) both}@keyframes up{from{opacity:0;transform:translateY(12px)}}
+.card{background:#fff;border:1px solid rgba(255,255,255,.9);border-radius:22px;padding:22px;box-shadow:var(--sh);transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-2px);box-shadow:0 1px 2px rgba(16,36,63,.04),0 18px 40px -10px rgba(30,70,140,.22)}
+h3{font:800 1rem var(--h);margin-bottom:6px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+h3:before{content:"";width:5px;height:16px;border-radius:4px;background:var(--g);flex-shrink:0}
+.hint{display:block;font-size:.78rem;color:var(--mute);line-height:1.6}
+.label{font-size:.72rem;font-weight:700;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.07em;color:var(--mute)}
+.hero{background:radial-gradient(500px 260px at 100% 0%,rgba(20,201,180,.38),transparent 65%),radial-gradient(420px 300px at 0% 100%,rgba(106,141,255,.45),transparent 60%),linear-gradient(135deg,#0b1f3a,#16356b 60%,#1d4fb8);color:#fff;border-radius:26px;padding:28px;position:relative;overflow:hidden;box-shadow:0 24px 50px -16px rgba(22,53,107,.6)}
+.hero:before{content:"";position:absolute;inset:0;opacity:.07;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:26px 26px;-webkit-mask-image:linear-gradient(120deg,transparent 30%,#000);mask-image:linear-gradient(120deg,transparent 30%,#000)}
+.hero>*{position:relative}.hero .hint{color:rgba(230,240,255,.78)}
+.hm{position:absolute!important;right:22px;top:22px;width:68px;height:68px;filter:drop-shadow(0 8px 20px rgba(0,0,0,.35));animation:fl 5s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-6px) rotate(3deg)}}
+.hero h2{font:800 1.5rem var(--h);letter-spacing:-.02em;margin-top:2px}
+.lvl{display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:.72rem;padding:5px 12px;border-radius:99px}
+.bal{margin-top:22px;font-size:.78rem;color:rgba(230,240,255,.8)}
+.bal strong{display:block;font:800 2.5rem var(--h);color:#fff;line-height:1.15;letter-spacing:-.03em;background:linear-gradient(90deg,#fff,#9fe9df);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.xp{margin:16px 0 8px;height:9px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden}.xp i{display:block;height:100%;background:linear-gradient(90deg,#14c9b4,#8fb0ff);border-radius:99px;transition:width .7s cubic-bezier(.2,.7,.2,1);box-shadow:0 0 12px rgba(20,201,180,.7)}
+.st3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.stat{min-width:0;background:#fff;border-radius:20px;padding:18px 10px;text-align:center;box-shadow:var(--sh);position:relative;overflow:hidden}
+.stat:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--g)}
+.stat b{display:block;font:800 clamp(1rem,2.2vw,1.35rem) var(--h);overflow-wrap:anywhere;background:var(--g);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.stat span{display:block;font-size:.72rem;color:var(--mute);line-height:1.35;margin-top:5px}
+.focus{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0;padding:20px 22px;border-radius:22px;background:linear-gradient(120deg,#e3ecff,#e4faf6);border:1px solid #fff;box-shadow:var(--sh)}
+.focus small{font-size:.66rem;font-weight:700;color:var(--lime);text-transform:uppercase;letter-spacing:.08em}.focus b{display:block;font-size:.92rem;margin-top:2px}.focus p{font-size:.74rem;color:var(--mute)}
+.btn{display:flex;justify-content:center;align-items:center;width:100%;padding:13px;border-radius:14px;font-weight:700;font-size:.87rem;margin-top:14px;transition:transform .15s,box-shadow .2s,filter .2s}.btn:hover{filter:brightness(1.06)}.btn:active{transform:scale(.97)}
+.btn.lime{background:var(--g);color:#fff;box-shadow:0 10px 22px -8px rgba(47,107,255,.65)}.btn.ghost{border:1.5px solid rgba(47,107,255,.45);color:var(--lime);background:rgba(47,107,255,.05)}
+.btn.dark{width:auto;margin:0;padding:11px 18px;background:var(--navy);color:#fff;font-size:.76rem;white-space:nowrap;box-shadow:0 8px 18px -6px rgba(11,31,58,.5)}
+.chk{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px dashed var(--line)}.chk:last-child{border:0}
+.chk span{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:.74rem;font-weight:800;background:#eef3fb;color:var(--mute)}
+.chk.done span{background:var(--g);color:#fff;box-shadow:0 6px 12px -4px rgba(47,107,255,.6)}
+.chk b{display:block;font-size:.84rem}.chk small{font-size:.7rem;color:var(--mute)}.chk:not(.done) b{opacity:.5}
+.bars{display:flex;gap:10px;align-items:flex-end;height:150px;margin-top:18px;padding:0 4px;background:repeating-linear-gradient(to top,transparent 0 37px,var(--line) 37px 38px)}
+.bars{position:relative;padding-right:108px}
+.bars .avg-line{position:absolute;left:0;right:108px;bottom:81px;height:0;border-top:2px dashed rgba(16,36,63,.4);z-index:2;pointer-events:none}
+.bars .avg-line:after{content:"Rata-rata: 9 jt";position:absolute;right:-108px;bottom:2px;white-space:nowrap;padding:3px 7px;border-radius:6px;background:#fff;color:var(--ink);font-size:.62rem;font-weight:700;line-height:1.35;border:1px solid var(--line)}
+.bars div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+.bars i{width:100%;max-width:46px;border-radius:10px 10px 4px 4px;background:linear-gradient(to top,#b9ccff,#7b9cff)}.bars div:last-child i{background:var(--g);box-shadow:0 8px 18px -6px rgba(47,107,255,.6)}
+.bars b{font-size:.7rem}.bars small{font-size:.66rem;color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 13px;border-radius:99px;font-size:.75rem;font-weight:600;background:#f2f6fd;border:1px solid var(--line);transition:all .2s}
+button.chip:hover{border-color:var(--lime)}
+.chip.on{background:var(--g);color:#fff;border-color:transparent;box-shadow:0 6px 14px -5px rgba(47,107,255,.6)}.chip.off{text-decoration:line-through;opacity:.55}
+.msg{margin-top:12px;font-size:.8rem;background:#eaf1ff;border-left:4px solid var(--lime);padding:12px 14px;border-radius:6px 14px 14px 6px;color:#1d3558}.msg.bad{background:#fff0f2;border-color:var(--warn);color:#6b1f2b}
+.gauge svg{display:block;width:260px;max-width:100%;margin:0 auto;filter:drop-shadow(0 6px 18px rgba(20,201,180,.35))}.gl{text-align:center;font-weight:700;color:#bff3ec;font-size:.84rem;margin-top:-4px}
+.fld{margin-top:16px}.fr{display:flex;justify-content:space-between;font-size:.8rem;font-weight:600}.fr output{font-weight:800;color:var(--lime)}
+.slider{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;background:linear-gradient(90deg,#c9d9ff,#d6f3ee);outline-offset:6px;margin:11px 0 2px}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:6px solid var(--lime);cursor:pointer;box-shadow:0 4px 10px rgba(47,107,255,.45)}
+.slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:6px solid var(--lime);cursor:pointer}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#edf2fb;padding:5px;border-radius:15px;margin-top:14px}
+.seg button{padding:10px;border-radius:11px;font-weight:700;font-size:.8rem;color:var(--mute);transition:all .2s}.seg button.on{background:#fff;color:var(--lime);box-shadow:0 4px 12px -2px rgba(30,70,140,.25)}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.rg div{background:linear-gradient(145deg,#f4f8ff,#eefaf8);border:1px solid var(--line);border-radius:14px;padding:12px}.rg small{display:block;font-size:.68rem;color:var(--mute)}.rg b{font:800 1.02rem var(--h)}
+.br{display:grid;grid-template-columns:96px 1fr auto;align-items:center;gap:8px;font-size:.74rem;margin-top:9px}
+.trk{height:10px;background:#e8eef9;border-radius:99px;overflow:hidden}.trk i{display:block;height:100%;background:linear-gradient(90deg,#2f6bff,#6a8dff);border-radius:99px;transition:width .3s}.trk i.l{background:linear-gradient(90deg,#14c9b4,#7be3d6)}
+.hist{display:flex;justify-content:space-between;gap:9px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.78rem}.hist:last-child{border:0}.warn{color:var(--warn)}
+.road{position:relative;padding-left:22px;margin-top:14px}.road:before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:3px;border-radius:3px;background:linear-gradient(#2f6bff,#14c9b4)}
+.mile{position:relative;padding:0 0 18px 10px}.mile:last-child{padding-bottom:0}.mile:before{content:"";position:absolute;left:-23px;top:3px;width:15px;height:15px;border-radius:50%;background:#fff;border:4px solid var(--lime);box-shadow:0 0 0 4px rgba(47,107,255,.15)}
+.mile b{display:block;font-size:.86rem}.mile p,.role p{font-size:.74rem;color:var(--mute)}
+.role{padding:11px 0;border-bottom:1px dashed var(--line)}.role:last-child{border:0}.role b{font-size:.82rem}
+.checkline{display:flex;align-items:flex-start;gap:10px;margin-top:14px;font-size:.76rem}.checkline input{margin-top:4px;width:16px;height:16px;accent-color:var(--lime)}
+.appeal textarea{width:100%;min-height:80px;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#f6f9ff;resize:vertical}
+.appeal textarea:focus{outline:2px solid rgba(47,107,255,.4);background:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.foot{text-align:center;font-size:.68rem;color:var(--mute);margin-top:10px}
+.nav{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);width:min(560px,calc(100% - 24px));display:grid;grid-template-columns:repeat(5,1fr);padding:7px;border-radius:24px;background:rgba(11,31,58,.92);backdrop-filter:blur(20px);z-index:30;box-shadow:0 18px 40px -10px rgba(11,31,58,.6);margin-bottom:env(safe-area-inset-bottom)}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border-radius:18px;color:rgba(220,232,255,.62);font-size:.64rem;font-weight:600;transition:all .25s}
+.nav svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.nav button.on{color:#fff;background:var(--g);box-shadow:0 8px 16px -6px rgba(47,107,255,.8)}
+#toast{position:fixed;top:68px;right:16px;z-index:90;display:flex;flex-direction:column;gap:8px;width:min(310px,calc(100% - 32px))}
+.t{background:rgba(11,31,58,.96);color:#fff;padding:12px 15px;border-radius:14px;font-size:.78rem;font-weight:600;border-left:4px solid var(--acc2);box-shadow:0 14px 30px -8px rgba(0,0,0,.4);animation:up .3s ease both}
+#splash{position:fixed;inset:0;z-index:99;display:grid;place-items:center;background:radial-gradient(circle at 50% 38%,rgba(47,107,255,.38),transparent 40%),radial-gradient(circle at 80% 90%,rgba(20,201,180,.25),transparent 35%),#071427;color:#fff;text-align:center;cursor:pointer;transition:opacity .5s,visibility .5s}
+#splash.hide{opacity:0;visibility:hidden}
+.sm{width:116px;height:116px;margin:0 auto 16px;display:block;filter:drop-shadow(0 0 28px rgba(47,107,255,.7));animation:fl 3s ease-in-out infinite}
+#splash h1{font:800 2rem var(--h);letter-spacing:-.03em}#splash p{color:#9fe9df;font-size:.9rem;margin:6px 0 24px}
+.sb{width:180px;height:6px;margin:auto;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden}.sb span{display:block;height:100%;background:var(--g);transform:scaleX(0);transform-origin:left;animation:ld 1.7s ease forwards}@keyframes ld{to{transform:none}}
+@media(min-width:760px){
+  .view{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px;align-items:start}
+  .view>*{min-width:0}
+  .view>.card{grid-column:1/-1}
+  .view>.hero,.view>.msg,.view>.foot{grid-column:1/-1}
+  .home-view>.st3,.data-view>.card:first-child{grid-column:span 7}
+  .home-view>.focus,.data-view>.card:nth-child(2){grid-column:span 5}
+  .skor-view>.hero{grid-column:span 5}
+  .skor-view>.card:nth-child(2){grid-column:span 7}
+  .skor-view>.card:nth-child(3),.skor-view>.card:nth-child(4){grid-column:span 6}
+  .sim-view>.card:first-child{grid-column:span 5}
+  .sim-view>.card:nth-child(2){grid-column:span 7}
+  .rencana-view>.card:nth-child(2){grid-column:1/-1}
+  .rencana-view>.card:nth-child(3),.rencana-view>.card:nth-child(4){grid-column:span 6}
+}
+@media(max-width:759px){
+  #app{max-width:560px}
+  main{padding:18px 16px 112px}
+  .view{display:flex;flex-direction:column;gap:14px}
+  .card{width:100%;padding:18px}
+  .hero{width:100%;padding:22px}
+  .focus{width:100%}
+}
+@media(max-width:390px){
+  .brand{font-size:.88rem}
+  .brand svg{width:28px;height:28px}
+  .pill{font-size:.68rem;padding:5px 10px}
+  main{padding-left:12px;padding-right:12px}
+  .hero{padding:18px}
+  .hm{width:50px;height:50px;right:14px;top:14px}
+  .hero h2,.hero>.hint:first-of-type{padding-right:46px}
+  .bal strong{font-size:2rem}
+  .st3{gap:8px}
+  .stat{padding:14px 5px}
+  .stat span{font-size:.64rem}
+  .focus{align-items:stretch;flex-direction:column;padding:16px}
+  .focus .btn.dark{width:100%}
+  .rg{gap:8px}
+  .rg div{min-width:0;padding:10px}
+  .rg b{font-size:.86rem;overflow-wrap:anywhere}
+  .br{grid-template-columns:minmax(58px,72px) minmax(30px,1fr) auto;gap:6px;font-size:.67rem}
+  .hist{align-items:flex-start;flex-wrap:wrap}
+  .hist span{flex:1 1 55%;min-width:0}
+  .hist b{flex:0 1 auto;text-align:right;overflow-wrap:anywhere}
+  .slider::-webkit-slider-thumb{width:28px;height:28px;margin-top:-3px}
+  .slider::-moz-range-thumb{width:28px;height:28px;margin-top:-3px}
+  .bars{padding-right:92px}
+  .bars .avg-line{right:92px}
+  .bars .avg-line:after{right:-92px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><symbol id="mk" viewBox="0 0 40 40"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f6bff"/><stop offset="1" stop-color="#14c9b4"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="url(#lg)"/><path d="M8 8h9v9H8zM23 8h9v9h-9zM8 23h9v9H8z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><circle cx="27.5" cy="27.5" r="5.5" fill="#fff"/></symbol></svg>
+<div id="splash"><div><svg class="sm"><use href="#mk"/></svg><h1>Mitra Usaha QRIS</h1><p>Dari jejak transaksi ke modal usaha</p><div class="sb"><span></span></div></div></div>
+<div id="toast"></div>
+<div id="app">
+<div class="top"><div class="brand"><svg><use href="#mk"/></svg>Mitra Usaha QRIS</div><span class="pill" id="ps">Belum setuju</span></div>
+<main id="main"></main>
+<nav class="nav" aria-label="Menu">
+<button data-go="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg>Beranda</button>
+<button data-go="data"><svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>Data</button>
+<button data-go="skor"><svg viewBox="0 0 24 24"><path d="M4 17a8 8 0 1 1 16 0M12 17l4-5"/></svg>Skor</button>
+<button data-go="sim"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>Simulasi</button>
+<button data-go="rencana"><svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h17M8 15l4-4 3 2 5-7"/></svg>Rencana</button>
+</nav>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const W=[["Konsistensi transaksi",25],["Stabilitas omzet",25],["Lama riwayat transaksi",20],["Keragaman transaksi",15],["Kewajaran pola",15]];
+const H=[["Mei",8.2],["Jun",8.8],["Jul",9.4],["Agu",9.1],["Sep",9.3],["Okt",9.2]];
+const AVG=9,DAYS=27;
+const S={tab:"home",consent:false,signed:false,contractRead:false,appealSubmitted:false,appealText:"",sc:[88,72,70,80,80],o:9,m:18,n:12,p:3,g:20,month:1,cap:true,grace:false,floor:false,review:false,floorValue:4};
+const rp=n=>"Rp"+Math.round(n).toLocaleString("id-ID");
+const jt=n=>"Rp"+n.toLocaleString("id-ID")+" jt";
+const score=()=>Math.round(S.sc.reduce((a,v,i)=>a+v*W[i][1]/100,0));
+const tier=s=>s>=75?{n:"Penawaran penuh",x:2}:s>=55?{n:"Penawaran lebih kecil dengan pendampingan",x:1}:{n:"Ditinjau secara manual",x:0};
+function calc(om){const z=om*1e6,pk=S.m*1e6/S.n,bh=S.floor&&om<S.floorValue?0:S.p/100*z,due=S.grace&&S.month===1?0:pk,cap=S.cap ? .2*z : Infinity,principalPaid=Math.max(0,Math.min(due,cap-bh)),paid=bh+principalPaid,laba=S.g/100*z;return{pk,bh,principalPaid,paid,res:pk-principalPaid,laba,r:laba?paid/laba:Infinity};}
+const toast=m=>{const t=document.createElement("div");t.className="t";t.textContent=m;$("#toast").append(t);setTimeout(()=>t.remove(),2600)};
+const resetAgreement=()=>{if(S.signed){S.signed=false;S.contractRead=false;toast("Perubahan skenario membatalkan persetujuan simulasi sebelumnya.");}};
+const lock=`<div class="card"><h3>Persetujuan belum diberikan</h3><span class="hint">Data usaha tidak dipakai dan proses berhenti. Beri persetujuan di tab Data untuk melanjutkan.</span><button class="btn lime" data-go="data">Buka tab Data</button></div>`;
+const sli=(k,l,min,max,st,v,u)=>`<div class="fld"><div class="fr"><span>${l}</span><output>${v}${u}</output></div><input class="slider" id="${k}" type="range" min="${min}" max="${max}" step="${st}" value="${v}" data-k="${k}" data-u="${u}" aria-label="${l}"></div>`;
+const steps=()=>{const t=tier(score()).x>0,c=S.consent;return[
+["Transaksi QRIS tercatat","PJP menyiapkan ringkasan bulanan",true],["Persetujuan data","Sukarela dan dapat dicabut",c],
+["Skor usaha dihitung","Skala 0 sampai 100",c],["Penjelasan skor","Faktor yang memengaruhi skor",c],
+["Penawaran kemitraan","Dinilai bersama informasi lain; skor bukan satu-satunya dasar",c&&t],["Kontrak dan pencairan","Simulasi persetujuan; layanan nyata perlu kontrak dan pencairan terpisah",c&&S.signed],
+["Bagi hasil dihitung","Contoh perhitungan kontrak; tidak ada pemotongan otomatis QRIS",c&&S.signed],["Evaluasi berkala","Skor, pendampingan, dan peluang lanjutan",c&&S.signed]];};
+function home(){const s=score(),t=tier(s),st=steps(),d=st.filter(x=>x[2]).length;
+const lim=S.consent&&t.x?jt(t.x*AVG):"Belum tersedia";
+const nx=!S.consent?["Tinjau dan beri persetujuan data","Sukarela; tanpa persetujuan proses berhenti","data","Tinjau"]:!S.signed?["Tinjau simulasi kewajiban","Belum ada pencairan atau kontrak nyata","sim","Mulai"]:["Simulasi disetujui","Dalam layanan nyata, pendanaan perlu kajian dan proses lanjutan","skor","Lihat skor"];
+return `<div class="hero"><svg class="hm"><use href="#mk"/></svg><span class="hint">Contoh simulasi untuk Rina</span><h2>Kedai minuman</h2><span class="lvl">Tahap ${d} dari 8</span>
+<div class="bal">Batas penawaran modal<strong>${lim}</strong></div><div class="xp"><i style="width:${d/8*100}%"></i></div><span class="hint">${S.consent?t.n:"Menunggu persetujuan data"}</span></div>
+<div class="msg bad">Gagasan yang diusulkan untuk diuji — bukan fitur QRIS atau layanan pendanaan yang sudah berjalan.</div>
+<div class="st3"><div class="stat"><b>${jt(AVG)}</b><span>Omzet QRIS rata-rata</span></div><div class="stat"><b>${DAYS}</b><span>Hari aktif per bulan</span></div><div class="stat"><b>${S.consent?s:"—"}</b><span>${S.consent?"Skor usaha":"Skor menunggu persetujuan"}</span></div></div>
+<div class="focus"><div><small>Langkah berikutnya</small><b>${nx[0]}</b><p>${nx[1]}</p></div><button class="btn dark" data-go="${nx[2]}">${nx[3]}</button></div>
+<div class="card"><h3>Alur kerja delapan tahap</h3>${st.map((x,i)=>`<div class="chk ${x[2]?"done":""}"><span>${x[2]?"&#10003;":i+1}</span><div><b>${x[0]}</b><small>${x[1]}</small></div></div>`).join("")}</div>
+<p class="foot">Semua angka, skor, fitur, perlindungan, dan target di layar ini adalah rancangan/asumsi untuk diuji; bukan data nyata, rekomendasi kredit, standar BI, atau fitur QRIS.</p>`;}
+const dataV=()=>`<div class="card"><h3>Ringkasan transaksi usaha</h3><span class="hint">Contoh enam bulan, dalam juta rupiah. Sasaran awal usulan: usaha rutin menerima QRIS minimal enam bulan. Data QRIS tidak mewakili omzet tunai atau seluruh omzet.</span><div class="bars">${H.map(h=>`<div><b>${h[1]}</b><i style="height:${Math.round(h[1]*9)}px"></i><small>${h[0]}</small></div>`).join("")}<div class="avg-line"></div></div><div class="msg">PJP hanya menyiapkan ringkasan bulanan yang dapat diakses secara sah, bukan rincian identitas atau daftar belanja pembeli.</div></div>
+<div class="card"><h3>Persetujuan penggunaan data</h3><span class="hint">Tujuan: menilai kelayakan untuk penawaran kemitraan modal. Penerima: lembaga pendanaan berizin pilihan Anda. Data digunakan paling lama 12 bulan. Persetujuan sukarela dan dapat dicabut kapan saja; jika belum setuju atau dicabut, data tidak digunakan dan proses berhenti.</span>
+<div class="label">Data yang dibagikan</div><div class="chips"><span class="chip on">Omzet bulanan</span><span class="chip on">Hari aktif</span><span class="chip on">Jumlah transaksi dan pembeli unik</span></div>
+<div class="label">Tidak dibagikan</div><div class="chips"><span class="chip off">Nama pembeli</span><span class="chip off">Data rinci per transaksi</span></div>
+<button class="btn ${S.consent?"ghost":"lime"}" data-a="consent">${S.consent?"Cabut persetujuan":"Beri persetujuan"}</button>
+<div class="msg ${S.consent?"":"bad"}">${S.consent?"Persetujuan aktif. Skor usaha dapat dihitung.":"Belum ada persetujuan. Tidak ada pemrosesan data atau penilaian sampai Anda memilih setuju."}</div></div>
+<div class="card"><h3>Perlindungan data</h3><span class="hint">Rancangan pengamanan: hanya data minimum, akses sesuai kebutuhan, penyimpanan aman, pencatatan setiap akses, dan prosedur penanganan insiden. Persetujuan perlu memenuhi ketentuan UU Perlindungan Data Pribadi dan aturan pelaksana yang berlaku; rincian pelaksanaan harus dikaji sebelum uji coba.</span></div>`;
+const gauge=()=>{const s=score(),L=Math.PI*80,a="M20 105A80 80 0 0 1 180 105";return `<svg viewBox="0 0 200 122" role="img" aria-label="Skor usaha ${s} dari 100"><path d="${a}" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="14" stroke-linecap="round"/><path d="${a}" fill="none" stroke="#5eead4" stroke-width="14" stroke-linecap="round" stroke-dasharray="${L*s/100} ${L}"/><text x="100" y="98" text-anchor="middle" font-size="46" font-weight="800" fill="#fff" font-family="Manrope,sans-serif">${s}</text><text x="100" y="118" text-anchor="middle" font-size="11" fill="#cfe0ff">dari 100</text></svg><div class="gl">${tier(s).n}</div>`};
+const sdyn=()=>{const m=W.map((w,i)=>[w[0],(100-S.sc[i])*w[1]/100]).sort((a,b)=>b[1]-a[1])[0];return `<h3>Penjelasan dan hak pelaku usaha</h3><div class="msg">Faktor yang paling menurunkan skor: <b>${m[0]}</b>. Skor hanya membantu penilaian, bukan satu-satunya dasar keputusan. Skor di bawah 55 ditinjau manual, bukan penolakan otomatis. Anda dapat meminta penjelasan dan mengajukan keberatan.</div><div class="label">Ambang skor (asumsi awal, bukan standar BI)</div><div class="chips"><span class="chip">75 ke atas: usulan penawaran penuh</span><span class="chip">55–74: lebih kecil dengan pendampingan</span><span class="chip">Di bawah 55: tinjau manual</span></div><div class="msg">Model awal diusulkan sederhana dan mudah dijelaskan, bukan AI. Sebelum dipakai perlu diuji dengan data historis anonim, akurasi, bias sektor/wilayah/gender, dan ditinjau berkala.</div>`};
+const skorV=()=>`<div class="hero"><div class="gauge" id="gauge"></div></div><div class="card"><h3>Indikator usaha</h3><span class="hint">Contoh bobot: konsistensi transaksi 25, stabilitas omzet 25, riwayat 20, keragaman 15, kewajaran pola 15. Geser untuk menguji skenario; nilai awal dan bobot hanya asumsi, bukan standar Bank Indonesia.</span>${W.map((w,i)=>sli("s"+i,`${w[0]} (bobot ${w[1]})`,0,100,1,S.sc[i],"")).join("")}</div><div class="card" id="sdyn"></div><div class="card appeal"><h3>Ajukan keberatan / tinjau manual</h3><span class="hint">Prototipe ini tidak mengirim laporan. Pada layanan nyata, harus tersedia kanal pengaduan dan batas waktu tanggapan yang jelas.</span><textarea id="appeal-text" aria-label="Alasan keberatan" placeholder="Tuliskan faktor yang perlu ditinjau" ${S.appealSubmitted?"disabled":""}>${S.appealText}</textarea><button class="btn ${S.appealSubmitted?"lime":"ghost"}" data-a="appeal" ${S.appealSubmitted?"disabled":""}>${S.appealSubmitted?"Laporan Diterima (Dalam Tinjauan)":"Kirim untuk simulasi"}</button></div>`;
+const offer=()=>{const t=tier(score()),lim=t.x*AVG;return t.x?`Batas ilustrasi berdasarkan ambang skor: <b>${jt(lim)}</b>${S.m>lim?` <b class="warn">Modal simulasi melebihi batas ilustrasi dan tidak dapat disetujui.</b>`:""}`:"Skor di bawah 55: perlu tinjau manual, tidak ada penawaran otomatis."};
+const simdyn=()=>{const c=calc(S.o),w=Math.max(c.paid,c.laba,1),p=Math.round(c.r*100);
+return `<div class="rg"><div><small>Pokok terjadwal</small><b>${rp(c.pk)}</b></div><div><small>Bagi hasil (${S.p}% omzet QRIS)</small><b>${rp(c.bh)}</b></div><div><small>Total dibayar bulan ini</small><b>${rp(c.paid)}</b></div><div><small>Pokok yang dijadwal ulang</small><b>${rp(c.res)}</b></div></div>
+<div class="br"><span>Dibayar</span><div class="trk"><i style="width:${c.paid/w*100}%"></i></div><b>${rp(c.paid)}</b></div><div class="br"><span>Laba asumsi</span><div class="trk"><i class="l" style="width:${c.laba/w*100}%"></i></div><b>${rp(c.laba)}</b></div>
+<div class="msg ${c.r>=1?"bad":""}">${c.r>=1?"Kewajiban menyamai atau melebihi laba asumsi. Tinjau ulang modal, tenor, dan perlindungan; simulasi bukan penilaian kemampuan bayar.":"Kewajiban di bawah laba asumsi pada skenario ini."} Saat ini ${p}% dari laba. Omzet QRIS bukan seluruh omzet atau laba aktual.</div>${S.grace&&S.month===1?`<div class="msg">Masa tenggang pokok aktif pada bulan pertama; pokok bulan ini dijadwalkan ulang, bukan dihapus.</div>`:""}${S.floor&&S.o<S.floorValue?`<div class="msg">Omzet di bawah ambang simulasi ${S.floorValue} jt: bagi hasil tidak dikenakan bulan ini.</div>`:""}
+<div class="label">Perbandingan tiga kondisi omzet</div>${[5,9,12].map(x=>{const k=calc(x);return `<div class="hist"><span>Omzet ${rp(x*1e6)}</span><b class="${k.r>=1?"warn":""}">${rp(k.paid)} (${Math.round(k.r*100)}% laba)</b></div>`}).join("")}<div class="hist"><span>Total bagi hasil jika omzet tetap ${jt(AVG)} selama ${S.n} bulan</span><b>${rp(AVG*1e6*S.p/100*S.n)} (${Math.round(AVG*S.p/100*S.n/Math.max(S.m,1)*100)}% dari pokok)</b></div>${S.review&&c.r>=1?`<div class="msg bad">Perlindungan aktif: skenario ini memerlukan tinjauan pihak ketiga sebelum ada keputusan.</div>`:""}`};
+const simV=()=>`<div class="card"><h3>Penawaran kemitraan (simulasi)</h3><span class="hint" id="off"></span>
+<div class="seg">${[5,9,12].map(x=>`<button data-o="${x}">Omzet ${x} jt</button>`).join("")}</div>
+${sli("o","Omzet QRIS bulan ini",3,15,.5,S.o," jt")}${sli("m","Modal usulan",6,30,1,S.m," jt")}${sli("n","Jangka waktu",6,24,1,S.n," bulan")}${sli("month","Bulan ke",1,S.n,1,Math.min(S.month,S.n),"")}${sli("p","Bagi hasil dari omzet QRIS",1,6,.5,S.p,"%")}${sli("g","Asumsi margin laba",10,35,1,S.g,"%")}
+<div class="label">Perlindungan tambahan (usulan untuk diuji)</div><div class="chips"><button class="chip ${S.cap?"on":""}" data-a="cap">Batas kewajiban 20% dari omzet</button><button class="chip ${S.grace?"on":""}" data-a="grace">Tenggang pokok bulan awal</button><button class="chip ${S.floor?"on":""}" data-a="floor">Ambang minimum omzet ${S.floorValue} jt</button><button class="chip ${S.review?"on":""}" data-a="review">Tinjauan pihak ketiga saat rugi</button></div>
+<div class="msg">Pokok yang belum terbayar tidak dihapus: penjadwalan ulang dan batas perpanjangannya harus tertulis dalam kontrak. Nilai ambang dan perlindungan di atas adalah asumsi simulasi.</div></div>
+<div class="card"><h3>Kewajiban bulan ini</h3><div id="sim"></div>
+<div class="label">Ringkasan yang wajib tertulis di kontrak</div><div class="hint">Pokok dikembalikan sebesar modal yang diterima; tidak ada tambahan yang dihitung hanya karena waktu. Imbal hasil lembaga berasal dari persentase hasil usaha yang disepakati dan ikut berubah sesuai kinerja. Biaya layanan, jika ada, dipisah dan dibatasi pada biaya nyata. Kontrak juga menjelaskan risiko, sengketa, dan perlakuan saat omzet turun.</div>
+<label class="checkline"><input type="checkbox" data-a="read-contract" ${S.contractRead?"checked":""}><span>Saya telah meninjau simulasi dan memahami bahwa ini bukan kontrak atau persetujuan pendanaan nyata.</span></label>
+<button class="btn ${S.signed?"ghost":"lime"}" data-a="sign">${S.signed?"Batalkan persetujuan simulasi":"Setujui simulasi kemitraan"}</button>
+<div id="modal-warning" class="msg bad" ${S.m>tier(score()).x*AVG?"":"hidden"}>Tombol dinonaktifkan: Modal usulan melebihi batas aman berdasarkan skor Anda. Silakan turunkan nominal modal atau tinjau ulang skor.</div>
+<span class="hint" style="margin-top:10px">Tidak ada pencairan atau pemotongan otomatis melalui QRIS. Pembayaran hanya dapat dilakukan melalui rekening atau pihak berwenang sesuai kontrak dan aturan. Status hukum skema perlu dikaji bersama regulator dan ahli hukum.</span></div>`;
+const rencanaV=()=>`<div class="hero"><span class="hint">Roadmap usulan 2027–2031</span><h2>Uji dulu, perluas bila aman dan adil</h2><p class="hint">Semua angka adalah target rencana, bukan capaian. Perluasan hanya dilakukan jika kajian, aturan akses data, dan evaluasi memenuhi syarat.</p></div>
+<div class="card"><h3>Tahapan implementasi</h3><div class="road">
+<div class="mile"><b>2027 · Persiapan</b><p>Kajian aturan dan model pembanding; rancangan skor, rumus, kontrak, perlindungan data; jajaki 1 PJP dan 1–2 lembaga pendanaan. Target: draf ditinjau ahli hukum/regulator.</p></div>
+<div class="mile"><b>2028 · Prototipe dan validasi</b><p>Uji skor dengan data historis anonim dan uji keamanan. Target: kemampuan membedakan risiko disepakati sebelum pengujian.</p></div>
+<div class="mile"><b>2029 · Pilot terbatas</b><p>Usulan sekitar 200 usaha di dua daerah. Target rencana: ≥85% memenuhi kewajiban atau jadwal ulang yang disepakati, tanpa insiden kebocoran; keluhan ditangani sesuai batas waktu.</p></div>
+<div class="mile"><b>2030 · Perluasan bersyarat</b><p>Jika hasil pilot memadai dan aturan jelas: usulan sekitar 2.000 usaha di lima daerah; kembangkan standar data antar-PJP dan proses pembayaran yang berwenang.</p></div>
+<div class="mile"><b>2031 · Evaluasi independen</b><p>Nilai omzet, ketahanan usaha 12 bulan, pengembalian modal, dan perlindungan. Putuskan perbaikan atau perluasan nasional dengan target awal sekitar 10.000 usaha.</p></div>
+</div><div class="msg">Evaluasi dilakukan setiap semester; hambatan izin data, kesiapan PJP, dan literasi digital ditangani melalui uji bertahap dan pendampingan.</div></div>
+<div class="card"><h3>Kolaborasi Pentahelix</h3>
+<div class="role"><b>Akademisi</b><p>Validasi model skor, ketepatan, bias, dan dampak secara independen.</p></div>
+<div class="role"><b>Bisnis</b><p>Lembaga pendanaan berizin, PJP, PKA terdaftar, dan pengembang teknologi menjalankan peran sesuai izin dan tanggung jawab tertulis.</p></div>
+<div class="role"><b>Komunitas</b><p>Komunitas wirausaha muda dan pendamping UMKM membantu edukasi, memahami kontrak, serta kanal pengaduan.</p></div>
+<div class="role"><b>Pemerintah</b><p>BI pada sistem pembayaran; OJK pada jasa keuangan dan perlindungan konsumen; Kementerian/dinas UMKM untuk sasaran dan pendampingan; otoritas PDP untuk tata kelola data.</p></div>
+<div class="role"><b>Media</b><p>Mengedukasi dan melaporkan hasil evaluasi secara bertanggung jawab sebagai gagasan yang masih diuji.</p></div></div>
+<div class="card"><h3>Risiko yang wajib dipantau</h3>
+<div class="role"><b>Privasi dan keamanan</b><p>Minimalkan data, batasi dan catat akses, amankan penyimpanan, siapkan penanganan insiden.</p></div>
+<div class="role"><b>Omzet tunai dan representasi data</b><p>QRIS bukan seluruh omzet; jangan menghukum pembayaran tunai secara berlebihan dan verifikasi secara proporsional.</p></div>
+<div class="role"><b>Transaksi semu, bias, dan musim usaha</b><p>Deteksi tidak sempurna; lakukan pemeriksaan manual serta evaluasi per sektor, wilayah, gender, dan periode yang sepadan.</p></div>
+<div class="role"><b>Kemampuan bayar dan sengketa</b><p>Batas kewajiban, biaya transparan, penjadwalan ulang tertulis, peninjauan pihak ketiga, dan mekanisme sengketa perlu disepakati.</p></div></div>
+<div class="card"><h3>Indikator evaluasi</h3><div class="chips"><span class="chip">Usaha yang terdanai</span><span class="chip">Pengembalian modal</span><span class="chip">Ketahanan 12 bulan</span><span class="chip">Perubahan omzet</span><span class="chip">Kemampuan pengelolaan</span><span class="chip">Keluhan dan insiden</span></div><p class="hint" style="margin-top:10px">Indikator adalah rencana pengukuran dampak, bukan klaim hasil yang sudah terbukti.</p></div>`;
+function paint(){$("#ps").textContent=S.consent?"Skor "+score():"Belum setuju";
+[["#gauge",gauge],["#sdyn",sdyn],["#sim",simdyn],["#off",offer]].forEach(([q,f])=>{const e=$(q);if(e)e.innerHTML=f()});
+document.querySelectorAll("[data-o]").forEach(b=>b.classList.toggle("on",+b.dataset.o===S.o));
+document.querySelectorAll("[data-a]").forEach(b=>{if(["cap","grace","floor","review"].includes(b.dataset.a))b.classList.toggle("on",S[b.dataset.a]);});
+const read=$('[data-a="read-contract"]');if(read){read.checked=S.contractRead;read.disabled=S.signed;}
+const sign=$('[data-a="sign"]');if(sign&&!S.signed)sign.disabled=!S.contractRead||!S.consent||!tier(score()).x||S.m>tier(score()).x*AVG;
+const warning=$("#modal-warning");if(warning)warning.hidden=!(S.m>tier(score()).x*AVG);}
+function show(){const t=S.tab,content=t==="home"?home():t==="data"?dataV():t==="skor"?(S.consent?skorV():lock):t==="sim"?(S.consent?simV():lock):rencanaV();$("#main").innerHTML=`<div class="view ${t}-view">${content}</div>`;
+document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===t));paint();window.scrollTo(0,0);}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-go],[data-a],[data-o]");if(!b)return;const d=b.dataset;
+if(d.go){S.tab=d.go;show();}
+else if(d.a==="consent"){S.consent=!S.consent;if(!S.consent){S.signed=false;S.contractRead=false;}toast(S.consent?"Persetujuan simulasi diberikan":"Persetujuan dicabut; data tidak digunakan");show();}
+else if(d.a==="sign"){if(S.signed){S.signed=false;S.contractRead=false;toast("Persetujuan simulasi dibatalkan");}else if(!S.consent||!S.contractRead||!tier(score()).x||S.m>tier(score()).x*AVG){toast("Persetujuan tidak dapat dilanjutkan; periksa persetujuan data, skor, dan batas penawaran.");return;}else{S.signed=true;toast("Persetujuan simulasi dicatat. Tidak ada kontrak atau pencairan nyata.");}show();}
+else if(d.a==="appeal"){const text=$("#appeal-text").value.trim();if(text){S.appealText=text;S.appealSubmitted=true;paint();toast("Laporan diterima (simulasi)");}else toast("Tuliskan alasan keberatan terlebih dahulu.");}
+else if(["cap","grace","floor","review"].includes(d.a)){resetAgreement();S[d.a]=!S[d.a];paint();}
+else if(d.o){resetAgreement();S.o=+d.o;const r=$("#o");r.value=S.o;r.closest(".fld").querySelector("output").textContent=S.o+" jt";paint();}});
+document.addEventListener("change",e=>{if(e.target.matches('[data-a="read-contract"]')){S.contractRead=e.target.checked;paint();}});
+document.addEventListener("input",e=>{const k=e.target.dataset.k;if(!k)return;const v=+e.target.value;
+resetAgreement();if(k[0]==="s")S.sc[+k.slice(1)]=v;else S[k]=v;
+if(k==="n"){S.month=Math.min(S.month,v);const month=$("#month");month.max=v;month.value=S.month;month.closest(".fld").querySelector("output").textContent=S.month;}
+e.target.closest(".fld").querySelector("output").textContent=v+e.target.dataset.u;paint();});
+const hide=()=>$("#splash").classList.add("hide");$("#splash").onclick=hide;setTimeout(hide,1900);
+show();
+</script>
+</body>
+</html>
